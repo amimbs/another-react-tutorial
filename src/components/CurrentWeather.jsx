@@ -43,6 +43,7 @@ const StyledCurrentWeather = styled.div`
         align-items: center;
         width: 400px;
         padding: 20px;
+        flex-direction: column;
 
         img {
             width: 80px;
@@ -50,7 +51,7 @@ const StyledCurrentWeather = styled.div`
         }
     
         h1 {
-            font-size: 3rem;
+            font-size: 2rem;
         }
     
         .content{

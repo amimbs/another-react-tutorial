@@ -15,23 +15,28 @@ import Forecast from './components/Forecast';
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState('Atlanta')
-  const url = `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_WEATHER_KEY}&q=${searchResults}&days=10&aqi=no&alerts=no`
+  const [searchResults, setSearchResults] = useState('')
 
-  
-  const { data } = useRequest(url)
+  // returing loading and data, deconstructuring the useRequest object 
+  const { data, loading } = useRequest(searchResults)
+
+  const body = Object.keys(data).length !== 0 && (
+    // there has to be a wrapper here because react can only return a single url element
+    <>
+      <CurrentWeather data={data} />
+      <Forecast data={data} />
+    </>
+  )
+
+  const loadingDiv = <div className="loadingDiv">Loading . . .</div>
+
+
   return (
     <div className="App">
       <ToastContainer />
-      <h2 style={{margin: "30px 0px"}}>Weather App</h2>
-      {Object.keys(data).length !== 0 && (
-        <>
-          <Search setSearchResults={setSearchResults} />
-          <CurrentWeather data={data} />
-          <Forecast data={data} />
-        </>
-      )}
-
+      <h2 style={{ margin: "30px 0px" }}>Weather App</h2>
+      <Search setSearchResults={setSearchResults} />
+      {loading ? loadingDiv : body}
     </div>
   );
 }
